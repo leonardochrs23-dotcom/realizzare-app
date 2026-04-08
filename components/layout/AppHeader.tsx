@@ -9,6 +9,7 @@ import {
 import { Ionicons } from '@expo/vector-icons';
 import { Colors } from '../../constants/Colors';
 import { Typography } from '../../constants/Typography';
+import { Image } from 'react-native';
 
 interface AppHeaderProps {
   title: string;
@@ -18,6 +19,7 @@ interface AppHeaderProps {
   onMenuPress: () => void;
   onCartPress?: () => void;
   onBellPress?: () => void;
+  showLogo?: boolean;
 }
 
 export default function AppHeader({
@@ -28,6 +30,7 @@ export default function AppHeader({
   onMenuPress,
   onCartPress,
   onBellPress,
+  showLogo = false,
 }: AppHeaderProps) {
   return (
     <View style={styles.container}>
@@ -42,12 +45,26 @@ export default function AppHeader({
         <Ionicons name="menu-outline" size={24} color={Colors.white} />
       </TouchableOpacity>
 
-      {/* Center: title absolutely centered */}
+      {/* Center: Brand or Title */}
       <View style={StyleSheet.absoluteFillObject} pointerEvents="none">
         <View style={styles.titleContainer}>
-          <Text style={styles.title} numberOfLines={1}>
-            {title}
-          </Text>
+          {showLogo ? (
+            <View style={styles.logoRow}>
+              <Image
+                source={require('../../assets/favicon.png')}
+                style={styles.logoImg}
+                resizeMode="contain"
+              />
+              <View style={styles.logoTexts}>
+                <Text style={styles.logoTitle}>Realizzare</Text>
+                <Text style={styles.logoSub}>CURSOS ONLINE</Text>
+              </View>
+            </View>
+          ) : (
+            <Text style={styles.title} numberOfLines={1}>
+              {title}
+            </Text>
+          )}
         </View>
       </View>
 
@@ -89,7 +106,7 @@ export default function AppHeader({
 
 const styles = StyleSheet.create({
   container: {
-    height: 56,
+    height: 62, // Increased height
     backgroundColor: Colors.darkNavy, // Restored blue header
     flexDirection: 'row',
     alignItems: 'center',
@@ -108,7 +125,34 @@ const styles = StyleSheet.create({
     height: 56,
     alignItems: 'center',
     justifyContent: 'center',
-    paddingHorizontal: 70,
+    paddingHorizontal: 0,
+  },
+  logoRow: { 
+    flexDirection: 'row', 
+    alignItems: 'center', 
+    gap: 8,
+  },
+  logoImg: { 
+    width: 26, // Decreased logo size
+    height: 26, 
+    borderRadius: 6 
+  },
+  logoTexts: { 
+    gap: 0,
+    justifyContent: 'center'
+  },
+  logoTitle: { 
+    color: Colors.white, 
+    fontSize: 14, 
+    fontWeight: '700',
+    lineHeight: 16,
+  },
+  logoSub: { 
+    color: '#A9B8C6', 
+    fontSize: 8, 
+    letterSpacing: 1.5, 
+    textTransform: 'uppercase',
+    lineHeight: 10,
   },
   title: {
     color: Colors.white,

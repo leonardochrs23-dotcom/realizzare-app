@@ -31,7 +31,8 @@ export default function HomeScreen() {
     <SafeAreaView edges={['top']} style={styles.root}>
       {/* Header keeping the transparent style over the light bg */}
       <AppHeader
-        title="" // Clean top header like the reference
+        title="" 
+        showLogo={true} // Enabled Realizzare brand logo
         onMenuPress={() => setDrawerOpen(true)}
         showBell
         showCart
@@ -127,33 +128,43 @@ export default function HomeScreen() {
 
         {/* ── Section Header ── */}
         <View style={styles.sectionHeader}>
-          <Text style={styles.sectionTitle}>Continuar Estudando</Text>
-          <TouchableOpacity activeOpacity={0.7}>
+          <View>
+            <Text style={styles.sectionTitle}>Continuar Estudando</Text>
+            <Text style={styles.sectionSubtitle}>{filtered.length} cursos em andamento</Text>
+          </View>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/(tabs)')}>
             <Text style={styles.sectionLink}>Ver todos</Text>
           </TouchableOpacity>
         </View>
 
-        {/* ── Courses Vertical List ── */}
-        <View style={styles.courseList}>
+        {/* ── Courses Horizontal Carousel ── */}
+        <ScrollView 
+          horizontal 
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.horizontalCourseList}
+          snapToInterval={280 + 16} // card width + gap
+          decelerationRate="fast"
+          snapToAlignment="start"
+        >
           {filtered.length === 0 ? (
              <Text style={styles.emptyText}>Nenhum curso encontrado</Text>
           ) : (
             filtered.map((course, idx) => (
-              <CourseCard
-                key={course.id}
-                title={course.title}
-                workload={course.workload}
-                progress={course.progress}
-                status={course.status}
-                imageUrl={`https://picsum.photos/seed/${course.id}/400/200`} // Mock image placeholder
-                // Toggle CTA variants based on index for the reference look
-                ctaVariant={idx % 2 === 0 ? 'dark' : 'light'} 
-                tag={idx % 2 === 0 ? 'DESIGN' : 'DADOS'}
-                onPress={() => router.push(`/course/${course.id}` as any)}
-              />
+              <View key={course.id} style={styles.horizontalCardWrapper}>
+                <CourseCard
+                  title={course.title}
+                  workload={course.workload}
+                  progress={course.progress}
+                  status={course.status}
+                  imageUrl={`https://picsum.photos/seed/${course.id}/400/200`} // Mock image placeholder
+                  ctaVariant={idx % 2 === 0 ? 'dark' : 'light'} 
+                  tag={idx % 2 === 0 ? 'DESIGN' : 'DADOS'}
+                  onPress={() => router.push(`/course/${course.id}` as any)}
+                />
+              </View>
             ))
           )}
-        </View>
+        </ScrollView>
 
         {/* ── Bottom Promotional Banner ── */}
         <View style={styles.promoBanner}>
@@ -179,7 +190,7 @@ const styles = StyleSheet.create({
   // ── Title Section ──
   titleSection: {
     paddingHorizontal: 20,
-    paddingTop: 10,
+    paddingTop: 24, // Increased from 10 to 24 for more space below header
     marginBottom: 20,
   },
   subtitle: {
@@ -353,27 +364,37 @@ const styles = StyleSheet.create({
   // ── Section Header ──
   sectionHeader: {
     flexDirection: 'row',
-    alignItems: 'flex-end',
+    alignItems: 'flex-start',
     justifyContent: 'space-between',
     paddingHorizontal: 20,
-    marginBottom: 16,
+    marginBottom: 20,
   },
   sectionTitle: {
     color: '#152433',
     fontSize: 18,
     fontWeight: '800',
+    marginBottom: 2,
+  },
+  sectionSubtitle: {
+    color: '#8C97A7',
+    fontSize: 12,
+    fontWeight: '500',
   },
   sectionLink: {
     color: '#658C36', // Greenish
     fontSize: 12,
     fontWeight: '700',
+    marginTop: 4,
   },
 
-  // ── Course List ──
-  courseList: {
+  // ── Course Carousel ──
+  horizontalCourseList: {
     paddingHorizontal: 16,
+    paddingBottom: 24, // room for shadows
     gap: 16,
-    marginBottom: 24,
+  },
+  horizontalCardWrapper: {
+    width: 280, // Fixed width for horizontal carousel
   },
   emptyText: {
     color: Colors.gray,

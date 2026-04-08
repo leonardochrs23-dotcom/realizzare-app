@@ -126,12 +126,12 @@ const styles = StyleSheet.create({
   card: {
     backgroundColor: Colors.white,
     borderRadius: 16,
-    shadowColor: Colors.black,
-    shadowOffset: { width: 0, height: 6 }, // Increased shadow depth
-    shadowOpacity: 0.1, // Increased shadow opacity
-    shadowRadius: 15,
-    elevation: 4,
-    overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 8 }, // More vertical drop
+    shadowOpacity: 0.16, // More visible shadow
+    shadowRadius: 18, // More diffused
+    elevation: 6,
+    overflow: 'visible', // allow shadows to show even if we have fixed radius
     width: '100%',
   },
   cover: {

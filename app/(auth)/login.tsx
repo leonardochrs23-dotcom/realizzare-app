@@ -11,6 +11,7 @@ import {
   Dimensions,
 } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { Ionicons } from '@expo/vector-icons';
 import { useRouter } from 'expo-router';
 import { Colors } from '../../constants/Colors';
 import { Typography } from '../../constants/Typography';
@@ -27,6 +28,7 @@ export default function LoginScreen() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
+  const [keepLoggedIn, setKeepLoggedIn] = useState(true);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
@@ -111,16 +113,26 @@ export default function LoginScreen() {
               onRightIconPress={() => setShowPassword((v) => !v)}
             />
 
-            {/* Forgot password */}
-            <TouchableOpacity
-              style={styles.forgotRow}
-              onPress={() => router.push('/(auth)/forgot-password')}
-              activeOpacity={0.7}
-              accessibilityRole="link"
-              accessibilityLabel="Esqueci minha senha"
-            >
-              <Text style={styles.forgotText}>Esqueci minha senha</Text>
-            </TouchableOpacity>
+            {/* Options Row: Remember Me & Forgot Password */}
+            <View style={styles.optionsRow}>
+              <TouchableOpacity
+                style={styles.keepLoggedRow}
+                onPress={() => setKeepLoggedIn(!keepLoggedIn)}
+                activeOpacity={0.7}
+              >
+                <View style={[styles.checkbox, keepLoggedIn && styles.checkboxActive]}>
+                  {keepLoggedIn && <Ionicons name="checkmark" size={14} color={Colors.white} />}
+                </View>
+                <Text style={styles.keepLoggedText}>Continuar logado</Text>
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                onPress={() => router.push('/(auth)/forgot-password')}
+                activeOpacity={0.7}
+              >
+                <Text style={styles.forgotText}>Esqueci minha senha</Text>
+              </TouchableOpacity>
+            </View>
 
             {/* Login button */}
             <View style={styles.buttonWrapper}>
@@ -245,15 +257,40 @@ const styles = StyleSheet.create({
     fontWeight: '500',
   },
 
-  // ── Forgot password ───────────────────────────────────────────────────────
-  forgotRow: {
-    alignSelf: 'flex-end',
-    marginTop: -8,
+  // ── Options Row ──────────────────────────────────────────────────────────
+  optionsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-between',
     marginBottom: 24,
+  },
+  keepLoggedRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    gap: 8,
+  },
+  checkbox: {
+    width: 20,
+    height: 20,
+    borderRadius: 6,
+    borderWidth: 1.5,
+    borderColor: '#D1D5DB',
+    alignItems: 'center',
+    justifyContent: 'center',
+    backgroundColor: Colors.white,
+  },
+  checkboxActive: {
+    backgroundColor: Colors.primaryGreen,
+    borderColor: Colors.primaryGreen,
+  },
+  keepLoggedText: {
+    color: Colors.gray,
+    fontSize: 14,
+    fontWeight: '500',
   },
   forgotText: {
     color: Colors.primaryBlue,
-    fontSize: Typography.size.base,
+    fontSize: 14,
     fontWeight: '500',
   },
 
