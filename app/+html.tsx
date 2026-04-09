@@ -17,10 +17,13 @@ export default function HTML({ children }: PropsWithChildren) {
 
         {/* 
           PWA: Apple Touch Icon for iOS 
-          This makes the icon appear correctly when added to the iPhone Home Screen.
+          We added ?v=1 to force Safari to clear the previous "U" icon cache.
         */}
-        <link rel="apple-touch-icon" href="/favicon.png" />
-        <link rel="icon" href="/favicon.png" />
+        <link rel="apple-touch-icon" sizes="180x180" href="/favicon.png?v=1" />
+        <link rel="apple-touch-icon-precomposed" href="/favicon.png?v=1" />
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon.png?v=1" />
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon.png?v=1" />
+        <link rel="mask-icon" href="/favicon.png?v=1" color="#253953" />
 
         <ScrollViewStyleReset />
 
