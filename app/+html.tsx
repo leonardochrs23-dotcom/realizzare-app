@@ -15,6 +15,9 @@ export default function HTML({ children }: PropsWithChildren) {
         <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
 
+        {/* PWA Manifest */}
+        <link rel="manifest" href="/manifest.json" />
+
         {/* 
           PWA: Apple Touch Icon for iOS 
           We added ?v=1 to force Safari to clear the previous "U" icon cache.
