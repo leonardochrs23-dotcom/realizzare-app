@@ -132,7 +132,7 @@ export default function HomeScreen() {
             <Text style={styles.sectionTitle}>Continuar Estudando</Text>
             <Text style={styles.sectionSubtitle}>{filtered.length} cursos em andamento</Text>
           </View>
-          <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/(tabs)')}>
+          <TouchableOpacity activeOpacity={0.7} onPress={() => router.push('/meus-cursos' as any)}>
             <Text style={styles.sectionLink}>Ver todos</Text>
           </TouchableOpacity>
         </View>

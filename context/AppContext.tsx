@@ -7,6 +7,7 @@ interface AppContextType {
   setActiveTab: (t: string) => void;
 }
 
+// Export the context object so TabsLayout can use AppContext.Provider directly
 export const AppContext = createContext<AppContextType>({
   drawerOpen: false,
   setDrawerOpen: () => {},

@@ -84,14 +84,21 @@ export default function ModuleAccordion({
 const styles = StyleSheet.create({
   container: {
     backgroundColor: Colors.white,
-    borderBottomWidth: 1,
-    borderBottomColor: Colors.border,
+    borderRadius: 10,
     overflow: 'hidden',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 1 },
+    shadowOpacity: 0.06,
+    shadowRadius: 4,
+    elevation: 2,
   },
   containerExpanded: {
     borderLeftWidth: 4,
     borderLeftColor: Colors.primaryGreen,
-    backgroundColor: Colors.lightGreen,
+    backgroundColor: '#F4FADE', // Stronger green tint for expanded
+    shadowOpacity: 0.12,
+    shadowRadius: 8,
+    elevation: 4,
   },
   header: {
     flexDirection: 'row',
